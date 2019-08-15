@@ -68,24 +68,27 @@ This is maintained by `jiralib2-login'.")
   "Login to JIRA with USERNAME and PASSWORD. Save cookie in *JIRA-SESSION*."
   (interactive)
   (setq *JIRA-SESSION*
-        (let* ((username (or username
-                             jiralib2-user-login-name
-                             (read-string "Username: ")))
-               (password (or password
-                             (read-passwd (format "Password for user %s: "
-                                                  username))))
-               (reply-data (request (concat jiralib2-url "/rest/auth/1/session")
-                                    :type "POST"
-                                    :headers `(("Content-Type" . "application/json"))
-                                    :parser 'json-read
-                                    :sync t
-                                    :data (json-encode `((username . ,username)
-                                                         (password . ,password)))))
-               (status-code (request-response-status-code reply-data))
-               (auth-info (cdar (jiralib2--verify-status reply-data)))
-               (session-token (format "%s=%s"
-                                      (cdr (assoc 'name auth-info))
-                                      (cdr (assoc 'value auth-info)))))
+        (let* (
+               ;; (username (or username
+               ;;               jiralib2-user-login-name
+               ;;               (read-string "Username: ")))
+               ;; (password (or password
+               ;;               (read-passwd (format "Password for user %s: "
+               ;;                                    username))))
+               ;; (reply-data (request (concat jiralib2-url "/rest/auth/1/session")
+               ;;                      :type "POST"
+               ;;                      :headers `(("Content-Type" . "application/json"))
+               ;;                      :parser 'json-read
+               ;;                      :sync t
+               ;;                      :data (json-encode `((username . ,username)
+               ;;                                           (password . ,password)))))
+               ;; (status-code (request-response-status-code reply-data))
+               ;; (auth-info (cdar (jiralib2--verify-status reply-data)))
+               ;; (session-token (format "%s=%s"
+               ;;                        (cdr (assoc 'name auth-info))
+               ;;                        (cdr (assoc 'value auth-info))))
+               (session-token (read-string "copy token here"))
+               )
           session-token)))
 
 (defun jiralib2--verify-status (response)
